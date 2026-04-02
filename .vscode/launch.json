@@ -1,0 +1,118 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "🐈 Gateway (网关模式)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "nanobot",
+            "console": "integratedTerminal",
+            "args": ["gateway"],
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "🤖 Agent CLI (命令行交互)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "nanobot",
+            "console": "integratedTerminal",
+            "args": ["agent"],
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "💬 Agent Single Message (单次消息)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "nanobot",
+            "console": "integratedTerminal",
+            "args": ["agent", "-m", "Hello!"],
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "⚙️ Status (状态检查)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "nanobot",
+            "console": "integratedTerminal",
+            "args": ["status"],
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "🔧 Onboard (初始化配置)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "nanobot",
+            "console": "integratedTerminal",
+            "args": ["onboard"],
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "🧪 Run Tests (运行测试)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "console": "integratedTerminal",
+            "args": ["tests", "-v"],
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "🐛 Debug Current File (调试当前文件)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "🚀 Debug Current File with Args (带参数调试)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": ["${input:debugArgs}"],
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false
+        }
+    ],
+    "inputs": [
+        {
+            "id": "debugArgs",
+            "type": "promptString",
+            "description": "输入命令行参数（空格分隔，例如：--port 8080 --verbose）"
+        }
+    ]
+}

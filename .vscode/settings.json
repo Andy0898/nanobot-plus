@@ -1,0 +1,32 @@
+{
+    "python.defaultInterpreterPath": "${env:HOME}/.local/bin/python3",
+    "python.terminal.activateEnvironment": true,
+    "python.analysis.extraPaths": [
+        "./nanobot"
+    ],
+    "python.autoComplete.extraPaths": [
+        "./nanobot"
+    ],
+    "python.linting.enabled": true,
+    "python.linting.ruffEnabled": true,
+    "python.formatting.provider": "black",
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
+    },
+    "debug.console.fontFamily": "Consolas",
+    "debug.console.fontSize": 14,
+    "explorer.excludeGitIgnore": false,
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/*.pyc": true,
+        "**/.pytest_cache": true,
+        "**/node_modules": true
+    },
+    "cursorpyright.analysis.extraPaths": [
+        "./nanobot"
+    ]
+}

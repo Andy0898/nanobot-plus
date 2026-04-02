@@ -89,7 +89,7 @@ class NanobotDingTalkHandler(CallbackHandler):
                 for item in rich_list:
                     if not isinstance(item, dict):
                         continue
-                    if item.get("type") == "text":
+                    if item.get("text"):
                         t = item.get("text", "").strip()
                         if t:
                             content = (content + " " + t).strip() if content else t
@@ -205,8 +205,33 @@ class DingTalkChannel(BaseChannel):
                 return
 
             self._running = True
+            
+            # Save current proxy settings
+            import os
+            original_http_proxy = os.environ.get('HTTP_PROXY')
+            original_https_proxy = os.environ.get('HTTPS_PROXY')
+            
+            # Temporarily remove proxy for DingTalk HTTP client initialization
+            # This ensures DingTalk connections bypass the proxy
+            if original_http_proxy or original_https_proxy:
+                logger.info(
+                    "Proxy detected (HTTP_PROXY={}). Setting NO_PROXY for DingTalk domains.",
+                    original_http_proxy or original_https_proxy
+                )
+                # Add DingTalk domains to NO_PROXY instead of removing proxy entirely
+                existing_no_proxy = os.environ.get('NO_PROXY', '')
+                dingtalk_domains = 'wss-open-connection-union.dingtalk.com,api.dingtalk.com,oapi.dingtalk.com,dingtalk.com'
+                
+                if existing_no_proxy:
+                    os.environ['NO_PROXY'] = f"{dingtalk_domains},{existing_no_proxy}"
+                else:
+                    os.environ['NO_PROXY'] = dingtalk_domains
+                
+                logger.info("NO_PROXY set to: {}", os.environ['NO_PROXY'])
+            
+            # Initialize HTTP client - will respect NO_PROXY settings
             self._http = httpx.AsyncClient()
-
+            
             logger.info(
                 "Initializing DingTalk Stream Client with Client ID: {}...",
                 self.config.client_id,
@@ -225,7 +250,7 @@ class DingTalkChannel(BaseChannel):
                 try:
                     await self._client.start()
                 except Exception as e:
-                    logger.warning("DingTalk stream error: {}", e)
+                    logger.warning("DingTalk stream error: {}", str(e))
                 if self._running:
                     logger.info("Reconnecting DingTalk stream in 5 seconds...")
                     await asyncio.sleep(5)
